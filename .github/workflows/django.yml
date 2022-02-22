@@ -67,4 +67,6 @@ jobs:
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           cd service/
+          python manage.py makemigrations
+          python manage.py migrate
           python manage.py test
