@@ -52,8 +52,8 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          run: |
-            mypy --config-file conf/linters_and_fixers/mypy.ini
+        run: |
+          mypy --config-file conf/linters_and_fixers/mypy.ini
 
       - name: Run Tests
         env:
