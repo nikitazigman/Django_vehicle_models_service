@@ -41,8 +41,11 @@ ruamel.yaml.clib==0.2.6
 sqlparse==0.4.2
 toml==0.10.2
 tomli==2.0.1
+types-Markdown==3.3.12
 types-pytz==2021.3.5
 types-PyYAML==6.0.4
+types-requests==2.27.11
+types-urllib3==1.26.9
 typing-extensions==4.1.1
 uritemplate==4.1.1
 urllib3==1.26.8
