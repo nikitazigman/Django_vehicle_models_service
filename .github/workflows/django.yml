@@ -44,27 +44,27 @@ jobs:
         run: |
           flake8 --config=conf/linters_and_fixers/.flake8 service
 
-      - name: Run Mypy
-        env:
-          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-          POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          run: |
-            mypy --config-file conf/linters_and_fixers/mypy.ini
-
-        - name: Run Tests
-            env:
-              APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
-              REST_API_KEY: ${{ secrets.REST_API_KEY }}
-              DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
-              POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
-              POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-              POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-              POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-              POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-            run: |
-              cd service/
-              python manage.py test
+#      - name: Run Mypy
+#        env:
+#          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+#          POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
+#          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+#          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+#          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+#          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+#          run: |
+#            mypy --config-file conf/linters_and_fixers/mypy.ini
+#
+#        - name: Run Tests
+#            env:
+#              APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
+#              REST_API_KEY: ${{ secrets.REST_API_KEY }}
+#              DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+#              POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
+#              POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+#              POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+#              POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+#              POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+#            run: |
+#              cd service/
+#              python manage.py test
