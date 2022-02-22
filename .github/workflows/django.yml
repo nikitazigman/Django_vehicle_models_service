@@ -57,6 +57,8 @@ jobs:
 
         - name: Run Tests
             env:
+              APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
+              REST_API_KEY: ${{ secrets.REST_API_KEY }}
               DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
               POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
               POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
