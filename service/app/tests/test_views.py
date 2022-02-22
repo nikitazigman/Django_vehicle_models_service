@@ -3,14 +3,13 @@ from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import reverse
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class ViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         call_command("addvehiclemodels", 2)
-        user = User.objects.create_user(username="username", password="password")
+        User.objects.create_user(username="username", password="password")
 
     def setUp(self):
         self.assertTrue(self.client.login(username="username", password="password"))

@@ -1,5 +1,4 @@
 from app.models import VehicleBody, VehicleManufacture, VehicleModel, VehicleModelYear
-from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.test import TestCase
 

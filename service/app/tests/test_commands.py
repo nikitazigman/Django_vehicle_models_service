@@ -2,7 +2,6 @@ import json
 
 import requests
 from app.models import VehicleBody, VehicleManufacture, VehicleModel, VehicleModelYear
-from django.core.exceptions import ValidationError
 from django.core.management import call_command
 from django.test import TestCase
 
