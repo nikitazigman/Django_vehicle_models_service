@@ -1,4 +1,4 @@
-from app.models import VehicleBody, VehicleManufacture, VehicleModel, VehicleModelYear
+from app.models import Bodies, VehicleModel
 from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.test import TestCase
@@ -8,7 +8,7 @@ from django.urls import reverse
 class ViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        call_command("addvehiclemodels", 2)
+        call_command("addvehiclemodels", limit=2)
         User.objects.create_user(username="username", password="password")
 
     def setUp(self):
@@ -18,76 +18,51 @@ class ViewTest(TestCase):
         response = self.client.get(reverse("vehicle-models-list"))
 
         self.assertEqual(response.status_code, 200)
+        requested_models = response.json()
 
-        models = VehicleModel.objects.all()
-        self.assertEqual(len(response.json()), len(models))
+        models_number = VehicleModel.objects.all().count()
+        self.assertEqual(len(requested_models), models_number)
 
-        for check_model, resp_model in zip(models, response.json()):
-            self.assertEqual(check_model.name, resp_model["name"])
+        requested_model = requested_models[0]
+
+        self.assertTrue(requested_model.get("model"))
+        self.assertTrue(requested_model.get("manufacture"))
+        self.assertTrue(requested_model.get("body"))
+        self.assertTrue(requested_model.get("year"))
 
     def test_can_filter_models_by_body(self):
-        body_filter = VehicleBody.objects.first()
-
         response = self.client.get(
-            reverse("vehicle-models-list"), {"body": body_filter.id}
+            reverse("vehicle-models-list"), {"body": Bodies.Hatchback.value}
         )
 
         self.assertEqual(response.status_code, 200)
+        requested_models = response.json()
 
-        expected_models = VehicleModel.objects.filter(body=body_filter)
-        self.assertEqual(len(response.json()), len(expected_models))
-
-        for check_model, resp_model in zip(expected_models, response.json()):
-            self.assertEqual(check_model.name, resp_model["name"])
+        models_number = VehicleModel.objects.filter(body=Bodies.Hatchback.value).count()
+        self.assertEqual(len(requested_models), models_number)
 
     def test_can_filter_models_by_year(self):
-        year_filter = VehicleModelYear.objects.first()
-
+        year_filter = VehicleModel.objects.first().year
         response = self.client.get(
-            reverse("vehicle-models-list"), {"year": year_filter.id}
+            reverse("vehicle-models-list"), {"year": year_filter}
         )
 
         self.assertEqual(response.status_code, 200)
+        requested_models = response.json()
 
-        expected_models = VehicleModel.objects.filter(year=year_filter)
-        self.assertEqual(len(response.json()), len(expected_models))
-
-        for check_model, resp_model in zip(expected_models, response.json()):
-            self.assertEqual(check_model.name, resp_model["name"])
+        models_number = VehicleModel.objects.filter(year=year_filter).count()
+        self.assertEqual(len(requested_models), models_number)
 
     def test_can_filter_models_by_manufacture(self):
-        manufacture_filter = VehicleManufacture.objects.first()
-
+        manufacture_filter = VehicleModel.objects.first().manufacture
         response = self.client.get(
-            reverse("vehicle-models-list"), {"manufacture": manufacture_filter.id}
+            reverse("vehicle-models-list"), {"manufacture": manufacture_filter}
         )
 
         self.assertEqual(response.status_code, 200)
+        requested_models = response.json()
 
-        expected_models = VehicleModel.objects.filter(manufacture=manufacture_filter)
-        self.assertEqual(len(response.json()), len(expected_models))
-
-        for check_model, resp_model in zip(expected_models, response.json()):
-            self.assertEqual(check_model.name, resp_model["name"])
-
-    def test_can_get_bodies(self):
-        response = self.client.get(reverse("vehicle-bodies-list"))
-
-        self.assertEqual(response.status_code, 200)
-
-        bodies = VehicleBody.objects.all()
-        self.assertEqual(len(response.json()), len(bodies))
-
-        for check_body, resp_model in zip(bodies, response.json()):
-            self.assertEqual(check_body.name, resp_model["name"])
-
-    def test_can_get_manufactures(self):
-        response = self.client.get(reverse("vehicle-manufactures-list"))
-
-        self.assertEqual(response.status_code, 200)
-        manufactures = VehicleManufacture.objects.all()
-
-        self.assertEqual(len(response.json()), len(manufactures))
-
-        for check_manufacture, resp_model in zip(manufactures, response.json()):
-            self.assertEqual(check_manufacture.name, resp_model["name"])
+        models_number = VehicleModel.objects.filter(
+            manufacture=manufacture_filter
+        ).count()
+        self.assertEqual(len(requested_models), models_number)

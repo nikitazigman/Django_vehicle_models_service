@@ -1,10 +1,6 @@
 from django.urls import path
 
-from .views import (
-    VehicleBodyListView,
-    VehicleManufactureListView,
-    VehicleModelsListView,
-)
+from .views import VehicleModelsListView
 
 urlpatterns = [
     path(
@@ -12,12 +8,12 @@ urlpatterns = [
         VehicleModelsListView.as_view(),
         name="vehicle-models-list",
     ),
-    path(
-        "vehicle-bodies-list", VehicleBodyListView.as_view(), name="vehicle-bodies-list"
-    ),
-    path(
-        "vehicle-manufactures-list",
-        VehicleManufactureListView.as_view(),
-        name="vehicle-manufactures-list",
-    ),
+    # path(
+    #     "vehicle-bodies-list", VehicleBodyListView.as_view(), name="vehicle-bodies-list"
+    # ),
+    # path(
+    #     "vehicle-manufactures-list",
+    #     VehicleManufactureListView.as_view(),
+    #     name="vehicle-manufactures-list",
+    # ),
 ]

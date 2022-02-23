@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
+    "django_filters",
     # local apps
     "app.apps.AppConfig",
 ]
@@ -171,6 +172,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_AUTHENTICATION_CLASSES": default_authenticatoin,
 }
 
