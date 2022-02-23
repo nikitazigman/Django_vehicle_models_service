@@ -54,4 +54,4 @@ class Command(BaseCommand):
             serializer.is_valid(raise_exception=True)
             serializer.save()
 
-            logger.info(f"all vehicles was successfully stored to the DataBase")
+            logger.info("all vehicles was successfully stored to the DataBase")

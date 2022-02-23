@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from app.serializers import VehicleModelSerializer
 from django.test import TestCase
 from rest_framework.serializers import ValidationError

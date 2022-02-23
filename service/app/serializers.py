@@ -10,7 +10,7 @@ class VehicleModelSerializer(serializers.ModelSerializer):
 
         # Be careful, validation does not work with option many=True
         validators = [
-            serializers.UniqueTogetherValidator(
+            validators.UniqueTogetherValidator(
                 queryset=VehicleModel.objects.all(),
                 fields=["model", "manufacture", "year", "body"],
             )
