@@ -25,18 +25,18 @@ class VehicleVerificationSerializer(serializers.Serializer):
 
     verification = serializers.SerializerMethodField()
 
-    def get_verification(self, obj: dict) -> dict:
+    def get_verification(self, obj: dict) -> bool:
         if not VehicleModel.objects.filter(**obj).exists():
             return False
-            # raise serializers.ValidationError("given model does not exist in the db")
+
         return True
 
     def create(self):
-        raise NotImplemented(
+        raise NotImplementedError(
             "Method is forbidden. Class can be used only for verification"
         )
 
     def save(self):
-        raise NotImplemented(
+        raise NotImplementedError(
             "Method is forbidden. Class can be used only for verification"
         )
