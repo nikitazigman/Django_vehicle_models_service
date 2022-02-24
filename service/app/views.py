@@ -1,24 +1,26 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import generics
 
-from .models import VehicleBody, VehicleManufacture, VehicleModel
-from .serializers import (
-    VehicleBodySerializer,
-    VehicleManufactureSerializer,
-    VehicleModelSerializer,
-)
+from app.logic.views import VerifyAPIView
+
+from .models import VehicleModel
+from .serializers import VehicleModelSerializer
 
 
 class VehicleModelsListView(generics.ListAPIView):
     queryset = VehicleModel.objects.all()
     serializer_class = VehicleModelSerializer
-    filterset_fields = ["manufacture", "body", "year"]
+    filterset_fields = ["manufacture", "body", "year", "model"]
+
+    @method_decorator(cache_page(60 * 60 * 24 * 30))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 
-class VehicleBodyListView(generics.ListAPIView):
-    queryset = VehicleBody.objects.all()
-    serializer_class = VehicleBodySerializer
+class VehicleModelVerificationView(VerifyAPIView):
+    """the class checks existence of the vehicle model in service DB"""
 
-
-class VehicleManufactureListView(generics.ListAPIView):
-    queryset = VehicleManufacture.objects.all()
-    serializer_class = VehicleManufactureSerializer
+    @method_decorator(cache_page(60 * 60 * 24 * 30))
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)

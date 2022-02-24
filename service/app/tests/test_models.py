@@ -1,37 +1,20 @@
-from app.models import VehicleBody, VehicleManufacture, VehicleModel, VehicleModelYear
+from app.models import VehicleModel
 from django.db.utils import IntegrityError
 from django.test import TestCase
-
-
-class VehicleManufactureModelTest(TestCase):
-    def test_unique_name(self):
-        with self.assertRaises(IntegrityError):
-            VehicleManufacture.objects.create(name="test")
-            VehicleManufacture.objects.create(name="test")
-
-
-class VehicleBodyModelTest(TestCase):
-    def test_unique_name(self):
-        with self.assertRaises(IntegrityError):
-            VehicleBody.objects.create(name="test")
-            VehicleBody.objects.create(name="test")
-
-
-class VehicleModelYearTest(TestCase):
-    def test_unique_name(self):
-        with self.assertRaises(IntegrityError):
-            VehicleModelYear.objects.create(year=2020)
-            VehicleModelYear.objects.create(year=2020)
 
 
 class VehicleModelModelTest(TestCase):
     def test_unique_model(self):
         with self.assertRaises(IntegrityError):
             VehicleModel.objects.create(
-                name="c40",
-                manufacture=VehicleManufacture.objects.create(name="Volvo"),
+                model="c40", manufacture="Volvo", year=2005, body="Sedan"
             )
             VehicleModel.objects.create(
-                name="c40",
-                manufacture=VehicleManufacture.objects.create(name="Volvo"),
+                model="c40", manufacture="Volvo", year=2005, body="Sedan"
+            )
+
+    def test_body_choices(self):
+        with self.assertRaises(IntegrityError):
+            VehicleModel.objects.create(
+                model="c40", manufacture="Volvo", year=2005, body="sdan"
             )
