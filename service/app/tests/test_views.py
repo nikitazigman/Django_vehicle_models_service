@@ -1,4 +1,5 @@
 from app.models import Bodies, VehicleModel
+from app.serializers import VehicleModelSerializer
 from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.test import TestCase
@@ -66,3 +67,49 @@ class ViewTest(TestCase):
             manufacture=manufacture_filter
         ).count()
         self.assertEqual(len(requested_models), models_number)
+
+    def get_data_for_verification(self) -> dict:
+        model = VehicleModel.objects.first()
+        serializer = VehicleModelSerializer(model)
+        data = serializer.data
+        data.pop("id")
+
+        return data
+
+    def test_can_verify_existent_vehicle_model(self):
+        data = self.get_data_for_verification()
+
+        response = self.client.post(
+            reverse("model-verification"), data=data, content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        verification_response = response.json()
+
+        self.assertTrue(verification_response["verification"])
+
+    def test_can_verify_inexistent_vehicle_model(self):
+        data = self.get_data_for_verification()
+        data["year"] = 1000
+
+        response = self.client.post(
+            reverse("model-verification"), data=data, content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, 200)
+        verification_response = response.json()
+
+        self.assertFalse(verification_response["verification"])
+
+    def test_verification_view_validation_error(self):
+        data = self.get_data_for_verification()
+        data["year"] = "wrong type"
+
+        response = self.client.post(
+            reverse("model-verification"), data=data, content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, 400)
+        verification_response = response.json()
+
+        self.assertTrue(verification_response["year"])

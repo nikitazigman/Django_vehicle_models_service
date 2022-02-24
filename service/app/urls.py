@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import VehicleModelsListView
+from .views import VehicleModelsListView, VehicleModelVerificationView
 
 urlpatterns = [
     path(
@@ -8,12 +8,5 @@ urlpatterns = [
         VehicleModelsListView.as_view(),
         name="vehicle-models-list",
     ),
-    # path(
-    #     "vehicle-bodies-list", VehicleBodyListView.as_view(), name="vehicle-bodies-list"
-    # ),
-    # path(
-    #     "vehicle-manufactures-list",
-    #     VehicleManufactureListView.as_view(),
-    #     name="vehicle-manufactures-list",
-    # ),
+    path("verify/", VehicleModelVerificationView.as_view(), name="model-verification"),
 ]
