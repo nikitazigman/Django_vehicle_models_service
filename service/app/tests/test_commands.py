@@ -28,7 +28,9 @@ class AddVehicleModelsCommandTest(TestCase):
 
         self.assertEqual(vehicle_models.count(), models_number)
 
-        for row_data, vehicle_model in zip(self.data[:models_number], vehicle_models):
+        for row_data, vehicle_model in zip(
+            self.data[:models_number], vehicle_models
+        ):
             serializer = VehicleModelSerializer(vehicle_model)
             model_data = serializer.data
             model_data.pop("id")

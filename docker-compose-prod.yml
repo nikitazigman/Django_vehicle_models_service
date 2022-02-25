@@ -7,7 +7,7 @@ services:
       - ./conf/nginx:/etc/nginx/conf.d:ro
       - static_volume:/var/www/html/static
     ports:
-      - 80:80
+      - 3000:80
     depends_on:
       - web
 
@@ -36,7 +36,7 @@ services:
   redis:
     image: redis
     ports:
-      - 6379:6379
+      - 6379
 
 volumes:
   postgres_data:

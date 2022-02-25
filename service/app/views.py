@@ -1,8 +1,7 @@
+from app.logic.views import VerifyAPIView
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework import generics
-
-from app.logic.views import VerifyAPIView
 
 from .models import VehicleModel
 from .serializers import VehicleModelSerializer
