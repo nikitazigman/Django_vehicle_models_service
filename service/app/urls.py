@@ -4,9 +4,13 @@ from .views import VehicleModelsListView, VehicleModelVerificationView
 
 urlpatterns = [
     path(
-        "vehicle-models-list",
+        "list",
         VehicleModelsListView.as_view(),
         name="vehicle-models-list",
     ),
-    path("verify/", VehicleModelVerificationView.as_view(), name="model-verification"),
+    path(
+        "verify/",
+        VehicleModelVerificationView.as_view(),
+        name="model-verification",
+    ),
 ]

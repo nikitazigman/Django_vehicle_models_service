@@ -24,15 +24,21 @@ class Command(BaseCommand):
     )
 
     def add_arguments(self, parser):
-        parser.add_argument("--limit", type=int, default=self.DEFAULT_LIMIT)
-        parser.add_argument("--path", type=str, default=self.DEFAULT_DIR)
+        parser.add_argument(
+            "--limit", type=int, default=self.DEFAULT_LIMIT
+        )
+        parser.add_argument(
+            "--path", type=str, default=self.DEFAULT_DIR
+        )
 
     def _clean_the_table(self):
         VehicleModel.objects.all().delete()
 
     def handle(self, *args, **kwargs):
         with transaction.atomic():
-            logger.info("sript was started, previous VehicleModel table will be erased")
+            logger.info(
+                "sript was started, previous VehicleModel table will be erased"
+            )
             self._clean_the_table()
 
             path_to_json_file = Path(kwargs["path"])
@@ -48,10 +54,16 @@ class Command(BaseCommand):
             vehicle_models = vehicle_models[:models_number]
 
             vehicle_models_length = len(vehicle_models)
-            logger.debug(f"storring first {vehicle_models_length} models")
+            logger.debug(
+                f"storring first {vehicle_models_length} models"
+            )
 
-            serializer = VehicleModelSerializer(data=vehicle_models, many=True)
+            serializer = VehicleModelSerializer(
+                data=vehicle_models, many=True
+            )
             serializer.is_valid(raise_exception=True)
             serializer.save()
 
-            logger.info("all vehicles was successfully stored to the DataBase")
+            logger.info(
+                "all vehicles was successfully stored to the DataBase"
+            )

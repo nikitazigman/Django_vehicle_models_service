@@ -21,12 +21,15 @@ class VehicleModel(models.Model):
     year = models.IntegerField()
 
     def __str__(self):
-        return f"{self.manufacture} {self.model} {self.body} {self.year}"
+        return (
+            f"{self.manufacture} {self.model} {self.body} {self.year}"
+        )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["model", "manufacture", "body", "year"], name="unique_model"
+                fields=["model", "manufacture", "body", "year"],
+                name="unique_model",
             ),
             models.CheckConstraint(
                 name="check_body_choices",

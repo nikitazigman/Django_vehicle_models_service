@@ -10,10 +10,16 @@ class ViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         call_command("addvehiclemodels", limit=2)
-        User.objects.create_user(username="username", password="password")
+        User.objects.create_user(
+            username="username", password="password"
+        )
 
     def setUp(self):
-        self.assertTrue(self.client.login(username="username", password="password"))
+        self.assertTrue(
+            self.client.login(
+                username="username", password="password"
+            )
+        )
 
     def test_can_get_models(self):
         response = self.client.get(reverse("vehicle-models-list"))
@@ -33,13 +39,16 @@ class ViewTest(TestCase):
 
     def test_can_filter_models_by_body(self):
         response = self.client.get(
-            reverse("vehicle-models-list"), {"body": Bodies.Hatchback.value}
+            reverse("vehicle-models-list"),
+            {"body": Bodies.Hatchback.value},
         )
 
         self.assertEqual(response.status_code, 200)
         requested_models = response.json()
 
-        models_number = VehicleModel.objects.filter(body=Bodies.Hatchback.value).count()
+        models_number = VehicleModel.objects.filter(
+            body=Bodies.Hatchback.value
+        ).count()
         self.assertEqual(len(requested_models), models_number)
 
     def test_can_filter_models_by_year(self):
@@ -51,13 +60,16 @@ class ViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         requested_models = response.json()
 
-        models_number = VehicleModel.objects.filter(year=year_filter).count()
+        models_number = VehicleModel.objects.filter(
+            year=year_filter
+        ).count()
         self.assertEqual(len(requested_models), models_number)
 
     def test_can_filter_models_by_manufacture(self):
         manufacture_filter = VehicleModel.objects.first().manufacture
         response = self.client.get(
-            reverse("vehicle-models-list"), {"manufacture": manufacture_filter}
+            reverse("vehicle-models-list"),
+            {"manufacture": manufacture_filter},
         )
 
         self.assertEqual(response.status_code, 200)
@@ -80,7 +92,9 @@ class ViewTest(TestCase):
         data = self.get_data_for_verification()
 
         response = self.client.post(
-            reverse("model-verification"), data=data, content_type="application/json"
+            reverse("model-verification"),
+            data=data,
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 200)
@@ -93,7 +107,9 @@ class ViewTest(TestCase):
         data["year"] = 1000
 
         response = self.client.post(
-            reverse("model-verification"), data=data, content_type="application/json"
+            reverse("model-verification"),
+            data=data,
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 200)
@@ -106,7 +122,9 @@ class ViewTest(TestCase):
         data["year"] = "wrong type"
 
         response = self.client.post(
-            reverse("model-verification"), data=data, content_type="application/json"
+            reverse("model-verification"),
+            data=data,
+            content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 400)
