@@ -130,3 +130,10 @@ dmypy.json
 
 # Pycharm
 .idea/
+
+
+# VScode
+.vscode/
+
+# migrations 
+00*.py
