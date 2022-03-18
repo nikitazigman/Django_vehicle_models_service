@@ -12,7 +12,10 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 class Command(BaseCommand):
-    help = "add dataset of vehicles models into db, max rows is 10000"
+    # * here I told flake8 to ignore shadowing builtin attribute help
+    # * because name help defined by django lib
+
+    help = "add dataset of vehicles models into db, max rows is 10000"  # noqa: VNE003, A003
 
     DEFAULT_LIMIT = 10000
     DEFAULT_DIR = (

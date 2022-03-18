@@ -34,4 +34,4 @@ class AddVehicleModelsCommandTest(TestCase):
             serializer = VehicleModelSerializer(vehicle_model)
             model_data = serializer.data
             model_data.pop("id")
-            self.assertEquals(row_data, model_data)
+            self.assertEqual(row_data, model_data)

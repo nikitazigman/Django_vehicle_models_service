@@ -1,6 +1,8 @@
 from app.models import VehicleModel
-from app.serializers import (VehicleModelSerializer,
-                             VehicleVerificationSerializer)
+from app.serializers import (
+    VehicleModelSerializer,
+    VehicleVerificationSerializer,
+)
 from django.core.management import call_command
 from django.test import TestCase
 from rest_framework.serializers import ValidationError

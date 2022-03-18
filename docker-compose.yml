@@ -16,6 +16,19 @@ services:
     ports:
       - 6379:6379
 
+  rabbit:
+        hostname: rabbit
+        image: rabbitmq:management
+        env_file:
+          - conf/env/.dev-env
+        ports:
+            - 15672:15672
+            - 5672:5672
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+
+
 volumes:
   postgres_data:
-
