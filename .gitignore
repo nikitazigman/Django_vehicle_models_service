@@ -135,5 +135,5 @@ dmypy.json
 # VScode
 .vscode/
 
-# migrations 
+# migrations
 00*.py

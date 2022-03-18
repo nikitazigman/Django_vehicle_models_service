@@ -21,4 +21,3 @@ RUN pip install -r /code/requirements.txt
 COPY ./conf/gunicorn /code/conf/
 COPY ./service /code/
 # RUN python /code/manage.py collectstatic
-
